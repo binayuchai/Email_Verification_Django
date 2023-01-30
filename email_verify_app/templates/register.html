@@ -1,0 +1,15 @@
+
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li>
+        <span class="text-success">{{ message }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" class="btn btn-primary" value="submit">
+</form>

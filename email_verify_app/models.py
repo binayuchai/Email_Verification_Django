@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser,UserManager
 
 class User(AbstractUser):
     objects = UserManager()
+    email = models.EmailField(("email address"), blank=False)
     
     class Meta:
         verbose_name = "User"
@@ -16,5 +17,5 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.user
+        return self.user.username
 

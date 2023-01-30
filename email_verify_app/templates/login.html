@@ -1,4 +1,38 @@
 {% extends 'base_html.html' %}
+
+
+
 {% block maincontent %}
-Login page
+<div class="d-flex align-items-center justify-content-center mt-5">
+<div class="card card-shadow" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Login Page</h5>
+      {% if messages %}
+      {% for message in messages %}
+         <span class="text-success">{{message}}</span>
+      {% endfor %}
+      </ul>
+  
+    {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" id="id_username">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" id="id_password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <p>Don't have an account? </p>
+      <a href="{% url 'user:register' %}" class="btn btn-success">Register</a>
+    </div>
+  </div>
+  </div>
+
+
 {% endblock maincontent %}
+
+
