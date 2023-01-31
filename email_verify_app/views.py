@@ -8,10 +8,12 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
 
 
 User = get_user_model()
-print(User)
+@login_required
 def home(request):
     return render(request,"home.html")
 
@@ -102,17 +104,23 @@ def send_main_after_registration(email, token):
     send_mail(subject,message,email_from,recipient_list)
     
 
-def verify(request,token):
+def verify(request,auth_token):
     try:
-        profile_obj = Profile.objects.filter(auth_token = token).first()
+        profile_obj = Profile.objects.filter(auth_token = auth_token).first()
         if profile_obj:
+            if profile_obj.is_verified:
+                messages.success(request,"Email has been already verified")
+                return redirect("user:login")
+                
             profile_obj.is_verified = True
+            profile_obj.save()
             messages.success(request,"Email has been verified")
             return redirect("user:login")
         else:
             return redirect("user:error")   
     except Exception as e:
         print(e)
+        return redirect("user:error")
         
         
 
